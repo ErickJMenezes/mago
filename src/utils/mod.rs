@@ -23,6 +23,7 @@ pub mod progress;
 /// * `source` - Reference to the `Source` being processed.
 /// * `changed_code` - The formatted content as a `String`.
 /// * `dry_run` - Boolean flag indicating whether to perform a dry run.
+/// * `output_stdout` - A flag to determine whether to output the formatted source to stdout.
 ///
 /// # Returns
 ///
@@ -33,9 +34,13 @@ pub fn apply_changes(
     source: &Source,
     changed_code: String,
     dry_run: bool,
+    output_stdout: bool,
 ) -> Result<bool, Error> {
     let original_content = interner.lookup(&source.content);
     if original_content == changed_code {
+        if output_stdout {
+            print_to_stdout(changed_code);
+        }
         return Ok(false);
     }
 
@@ -49,11 +54,23 @@ pub fn apply_changes(
             println!("diff of '{}':", source_name);
             println!("{}", formatter.fmt_patch(&patch));
         });
+    } else if output_stdout {
+        print_to_stdout(changed_code);
     } else {
         source_manager.write(source.identifier, changed_code)?;
     }
 
     Ok(true)
+}
+
+/// Print the given `str` to the stdout while hiding all progress bars temporarily.
+///
+/// # Arguments
+///
+/// * `str`: The string to be printed.
+#[inline]
+pub fn print_to_stdout(str: String) {
+    progress::GLOBAL_PROGRESS_MANAGER.suspend(|| print!("{}", str));
 }
 
 /// Indents each line of `text` by `indent_str`, optionally indenting the first line.

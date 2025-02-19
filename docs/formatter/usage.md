@@ -40,6 +40,17 @@ mago format path/to/file.php path/to/directory
 
 This command formats only the specified files and directories, leaving other files untouched.
 
+### Formatting From Stdin
+
+To format the source code from the stdin instead of the disk files, use the `--stdin` flag.
+
+```bash
+mago format --stdin < source_file.php
+```
+
+This command leaves the disk files untouched. It outputs the result to the stdout.
+
+
 ## Configuration
 
 The formatter's behavior can be customized using the `mago.toml` configuration file.

@@ -1,10 +1,11 @@
-use std::path::Path;
-use std::path::PathBuf;
-
 use ahash::HashSet;
 use async_walkdir::Filtering;
 use async_walkdir::WalkDir;
 use futures::StreamExt;
+use std::io;
+use std::io::Read;
+use std::path::Path;
+use std::path::PathBuf;
 
 use mago_interner::ThreadedInterner;
 use mago_source::SourceCategory;
@@ -50,6 +51,27 @@ pub async fn from_paths(
             manager.insert_content(stub, content, SourceCategory::BuiltIn);
         }
     }
+
+    Ok(manager)
+}
+
+/// Load the source manager by reading the contents from the stdin.
+///
+/// # Arguments
+///
+/// * `interner` - The interner to use for string interning.
+///
+/// # Returns
+///
+/// A `Result` containing the new source manager or a `Error` if
+/// an error occurred during the build process.
+pub async fn from_stdin(interner: &ThreadedInterner) -> Result<SourceManager, Error> {
+    let manager = SourceManager::new(interner.clone());
+    let mut stdin = io::stdin().lock();
+    let mut source = String::new();
+    let _ = stdin.read_to_string(&mut source);
+
+    manager.insert_content("{stdin}", source, SourceCategory::UserDefined);
 
     Ok(manager)
 }

@@ -13,6 +13,7 @@ The `format` command is used to format PHP files in your project according to th
   - `PATH`: Format specific files or directories, overriding the source configuration.
 - Options:
   - `--dry-run`: Preview changes without modifying files.
+  - `--stdin`: Format the contents from stdin and outputs to the stdout.
 - Aliases: `mago fmt`
 
 ### `mago lint`

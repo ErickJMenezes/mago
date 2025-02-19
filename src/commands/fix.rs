@@ -111,6 +111,7 @@ pub async fn execute(command: FixCommand, mut configuration: Configuration) -> R
                     &source,
                     plan.execute(source_content).get_fixed(),
                     command.dry_run,
+                    false,
                 );
 
                 progress_bar.inc(1);

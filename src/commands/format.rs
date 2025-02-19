@@ -1,3 +1,5 @@
+use std::io::stdin;
+use std::io::IsTerminal;
 use std::path::PathBuf;
 use std::process::ExitCode;
 
@@ -40,6 +42,14 @@ pub struct FormatCommand {
     /// Perform a dry run to check if files are already formatted.
     #[arg(long, short = 'd', help = "Check if the source files are already formatted without making changes")]
     pub dry_run: bool,
+
+    /// Outputs the formated contents to the stdout instead of writing the file.
+    #[arg(
+        long,
+        short = 's',
+        help = "Format the source from the stdin. The result is printed to stdout instead of writing to a file."
+    )]
+    pub stdin: bool,
 }
 
 /// Executes the format command with the provided configuration and options.
@@ -58,8 +68,16 @@ pub async fn execute(command: FormatCommand, mut configuration: Configuration) -
 
     configuration.source.excludes.extend(std::mem::take(&mut configuration.format.excludes));
 
+    if command.stdin && stdin().is_terminal() {
+        tracing::warn!("The --stdin option must not be used without a pipe/redirection.");
+
+        return Ok(ExitCode::FAILURE);
+    }
+
     // Load sources
-    let source_manager = if !command.path.is_empty() {
+    let source_manager = if command.stdin {
+        source::from_stdin(&interner).await?
+    } else if !command.path.is_empty() {
         source::from_paths(&interner, &configuration.source, command.path, false).await?
     } else {
         source::load(&interner, &configuration.source, false, false).await?
@@ -69,7 +87,7 @@ pub async fn execute(command: FormatCommand, mut configuration: Configuration) -
     let settings = configuration.format.get_settings();
 
     // Format all sources and get the count of changed files.
-    let changed = format_all(interner, source_manager, settings, command.dry_run).await?;
+    let changed = format_all(interner, source_manager, settings, command.dry_run, command.stdin).await?;
 
     // Provide feedback and return appropriate exit code.
     if changed == 0 {
@@ -96,7 +114,8 @@ pub async fn execute(command: FormatCommand, mut configuration: Configuration) -
 /// * `interner` - The interner to manage source identifiers.
 /// * `source_manager` - The manager responsible for handling source files.
 /// * `settings` - Formatting settings to apply.
-/// * `check` - A flag to determine whether to check or apply formatting.
+/// * `dry_run` - A flag to determine whether is a dry run or not.
+/// * `output_stdout` - A flag to determine whether to output the formatted source to stdout.
 ///
 /// # Returns
 ///
@@ -107,6 +126,7 @@ async fn format_all(
     source_manager: SourceManager,
     settings: FormatSettings,
     dry_run: bool,
+    output_stdout: bool,
 ) -> Result<usize, Error> {
     // Collect all user-defined sources.
     let sources: Vec<_> = source_manager.source_ids_for_category(SourceCategory::UserDefined);
@@ -123,7 +143,7 @@ async fn format_all(
             let progress_bar = progress_bar.clone();
 
             async move {
-                let result = format_source(&interner, &manager, &source, settings, dry_run);
+                let result = format_source(&interner, &manager, &source, settings, dry_run, output_stdout);
 
                 progress_bar.inc(1);
 
@@ -154,7 +174,8 @@ async fn format_all(
 /// * `manager` - Reference to the source manager.
 /// * `source` - Identifier of the source file to format.
 /// * `settings` - Formatting settings to apply.
-/// * `check` - A flag to determine whether to check or apply formatting.
+/// * `dry_run` - A flag to determine whether is a dry run or not.
+/// * `output_stdout` - A flag to determine whether to output the formatted source to stdout.
 ///
 /// # Returns
 ///
@@ -166,6 +187,7 @@ fn format_source(
     source: &SourceIdentifier,
     settings: FormatSettings,
     dry_run: bool,
+    output_stdout: bool,
 ) -> Result<bool, Error> {
     // Load the source file.
     let source = manager.load(source)?;
@@ -180,12 +202,18 @@ fn format_source(
 
             tracing::error!("Skipping formatting for source '{}': {}.", source_name, error);
 
+            if output_stdout {
+                // If parsing errors occurred, the original source code is printed out.
+                let original_source = interner.lookup(&source.content);
+                utils::print_to_stdout(original_source.to_string());
+            }
+
             false
         }
         None => {
             let formatted = format(interner, &source, &program, settings);
 
-            utils::apply_changes(interner, manager, &source, formatted, dry_run)?
+            utils::apply_changes(interner, manager, &source, formatted, dry_run, output_stdout)?
         }
     };
 
