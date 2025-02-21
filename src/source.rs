@@ -152,11 +152,7 @@ async fn add_path_to_manager(
     }
 
     let mut entries = WalkDir::new(path).filter(|entry| async move {
-        if entry.path().starts_with(".") {
-            Filtering::IgnoreDir
-        } else {
-            Filtering::Continue
-        }
+        if entry.path().starts_with(".") { Filtering::IgnoreDir } else { Filtering::Continue }
     });
 
     while let Some(entry) = entries.next().await {
@@ -214,11 +210,7 @@ fn create_excludes_set(excludes: &[String], root: &Path) -> HashSet<Exclusion> {
             } else {
                 let path = Path::new(exclude);
 
-                if path.is_absolute() {
-                    Exclusion::Path(path.to_path_buf())
-                } else {
-                    Exclusion::Path(root.join(path))
-                }
+                if path.is_absolute() { Exclusion::Path(path.to_path_buf()) } else { Exclusion::Path(root.join(path)) }
             }
         })
         .collect()

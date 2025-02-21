@@ -7,8 +7,8 @@ use strum::Display;
 use mago_span::HasSpan;
 use mago_span::Span;
 
-use crate::ast::*;
 use crate::Program;
+use crate::ast::*;
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash, Serialize, Deserialize, PartialOrd, Ord, Display)]
 #[serde(tag = "type", content = "value")]

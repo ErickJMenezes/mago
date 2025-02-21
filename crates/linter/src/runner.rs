@@ -8,8 +8,8 @@ use mago_reporting::IssueCollection;
 
 use crate::ast::AstNode;
 use crate::context::LintContext;
-use crate::ignore::get_ignores;
 use crate::ignore::IgnoreDirective;
+use crate::ignore::get_ignores;
 use crate::rule::ConfiguredRule;
 
 /// The `Runner` is responsible for executing a lint rule on the AST of a PHP program.

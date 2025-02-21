@@ -4,12 +4,12 @@ use ahash::HashMap;
 
 use mago_source::Source;
 
-use crate::document::group::GroupIdentifier;
 use crate::document::Document;
 use crate::document::Fill;
 use crate::document::IfBreak;
 use crate::document::IndentIfBreak;
 use crate::document::Line;
+use crate::document::group::GroupIdentifier;
 use crate::printer::command::Command;
 use crate::printer::command::Indent;
 use crate::printer::command::Mode;

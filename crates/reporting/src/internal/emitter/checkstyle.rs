@@ -5,11 +5,11 @@ use mago_interner::ThreadedInterner;
 use mago_source::HasSource;
 use mago_source::SourceManager;
 
+use crate::IssueCollection;
+use crate::Level;
 use crate::error::ReportingError;
 use crate::internal::emitter::utils::long_message;
 use crate::internal::emitter::utils::xml_encode;
-use crate::IssueCollection;
-use crate::Level;
 
 pub fn checkstyle_format(
     writer: &mut dyn WriteColor,

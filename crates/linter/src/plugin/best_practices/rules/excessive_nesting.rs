@@ -4,8 +4,8 @@ use toml::Value;
 use mago_ast::*;
 use mago_reporting::*;
 use mago_span::HasSpan;
-use mago_walker::walk_block_mut;
 use mago_walker::MutWalker;
+use mago_walker::walk_block_mut;
 
 use crate::context::LintContext;
 use crate::definition::RuleDefinition;

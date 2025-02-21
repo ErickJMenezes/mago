@@ -28,11 +28,7 @@ pub fn is_at_type_hint(stream: &mut TokenStream<'_, '_>) -> Result<bool, ParseEr
 }
 
 pub fn parse_optional_type_hint(stream: &mut TokenStream<'_, '_>) -> Result<Option<Hint>, ParseError> {
-    if is_at_type_hint(stream)? {
-        Ok(Some(parse_type_hint(stream)?))
-    } else {
-        Ok(None)
-    }
+    if is_at_type_hint(stream)? { Ok(Some(parse_type_hint(stream)?)) } else { Ok(None) }
 }
 
 pub fn parse_type_hint(stream: &mut TokenStream<'_, '_>) -> Result<Hint, ParseError> {

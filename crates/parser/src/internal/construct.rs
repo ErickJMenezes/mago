@@ -97,7 +97,7 @@ pub fn parse_construct(stream: &mut TokenStream<'_, '_>) -> Result<Construct, Pa
                     "exit",
                     "die"
                 ],
-            ))
+            ));
         }
     })
 }

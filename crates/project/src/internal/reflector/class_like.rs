@@ -1,13 +1,13 @@
 use ahash::HashMap;
 
 use mago_ast::*;
+use mago_reflection::class_like::ClassLikeReflection;
 use mago_reflection::class_like::constant::ClassLikeConstantReflection;
 use mago_reflection::class_like::enum_case::EnumCaseReflection;
 use mago_reflection::class_like::inheritance::InheritanceReflection;
 use mago_reflection::class_like::member::ClassLikeMemberVisibilityReflection;
 use mago_reflection::class_like::property::PropertyDefaultValueReflection;
 use mago_reflection::class_like::property::PropertyReflection;
-use mago_reflection::class_like::ClassLikeReflection;
 use mago_reflection::function_like::FunctionLikeReflection;
 use mago_reflection::identifier::*;
 use mago_span::*;
@@ -124,8 +124,8 @@ pub fn reflect_interface<'ast>(interface: &'ast Interface, context: &'ast mut Co
                 let interface = Name::new(*context.names.get(interface), interface.span());
                 let interface_lowered = context.interner.lowered(&interface.value);
 
-                inheritance_reflection.direct_implemented_interfaces.insert(interface);
-                inheritance_reflection.all_implemented_interfaces.insert(interface);
+                inheritance_reflection.direct_extended_interfaces.insert(interface);
+                inheritance_reflection.all_extended_interfaces.insert(interface);
                 inheritance_reflection.names.insert(interface_lowered, interface);
             }
         }
@@ -217,27 +217,30 @@ fn reflect_class_like_members<'ast>(
             }
             ClassLikeMember::Method(method) => {
                 let (name, meth_ref) = reflect_class_like_method(reflection, method, context);
+                let lowercase_name = context.interner.lowered(&name.value);
 
                 // `__construct`, `__clone`, and trait methods are always inheritable
-                let name_value = context.interner.lookup(&name.value);
+                let name_value = context.interner.lookup(&lowercase_name);
                 if meth_ref.visibility_reflection.map(|v| !v.is_private()).unwrap_or(true)
-                    || name_value.eq_ignore_ascii_case("__construct")
-                    || name_value.eq_ignore_ascii_case("__clone")
+                    || name_value.eq("__construct")
+                    || name_value.eq("__clone")
                     || reflection.is_trait()
                 {
-                    reflection.methods.inheritable_members.insert(name.value, reflection.name);
+                    reflection.methods.inheritable_members.insert(lowercase_name, reflection.name);
                 }
 
-                reflection.methods.members.insert(name.value, meth_ref);
+                reflection.methods.members.insert(lowercase_name, meth_ref);
             }
             ClassLikeMember::Property(property) => {
                 let prop_refs = reflect_class_like_property(reflection, property, context);
                 for prop_ref in prop_refs {
+                    let name = prop_ref.name.member.value;
+
                     if prop_ref.read_visibility_reflection.map(|v| !v.is_private()).unwrap_or(true) {
-                        reflection.properties.inheritable_members.insert(prop_ref.name.member.value, reflection.name);
+                        reflection.properties.inheritable_members.insert(name, reflection.name);
                     }
 
-                    reflection.properties.members.insert(prop_ref.name.member.value, prop_ref);
+                    reflection.properties.members.insert(name, prop_ref);
                 }
             }
         }

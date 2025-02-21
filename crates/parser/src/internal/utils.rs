@@ -55,22 +55,14 @@ pub fn expect_any(stream: &mut TokenStream<'_, '_>) -> Result<Token, ParseError>
 pub fn expect(stream: &mut TokenStream<'_, '_>, kind: TokenKind) -> Result<Token, ParseError> {
     let token = expect_any(stream)?;
 
-    if kind == token.kind {
-        Ok(token)
-    } else {
-        Err(unexpected(stream, Some(token), &[kind]))
-    }
+    if kind == token.kind { Ok(token) } else { Err(unexpected(stream, Some(token), &[kind])) }
 }
 
 #[inline]
 pub fn expect_one_of(stream: &mut TokenStream<'_, '_>, one_of: &[TokenKind]) -> Result<Token, ParseError> {
     let token = expect_any(stream)?;
 
-    if one_of.contains(&token.kind) {
-        Ok(token)
-    } else {
-        Err(unexpected(stream, Some(token), one_of))
-    }
+    if one_of.contains(&token.kind) { Ok(token) } else { Err(unexpected(stream, Some(token), one_of)) }
 }
 
 #[inline]

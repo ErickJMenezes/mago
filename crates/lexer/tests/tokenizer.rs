@@ -6,8 +6,8 @@ use mago_source::SourceIdentifier;
 use mago_token::DocumentKind;
 use mago_token::TokenKind;
 
-use mago_lexer::error::SyntaxError;
 use mago_lexer::Lexer;
+use mago_lexer::error::SyntaxError;
 
 #[test]
 fn test_shebang() -> Result<(), SyntaxError> {

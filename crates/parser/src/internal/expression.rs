@@ -23,12 +23,12 @@ use crate::internal::instantiation::parse_instantiation;
 use crate::internal::literal;
 use crate::internal::magic_constant::parse_magic_constant;
 use crate::internal::operation::unary;
-use crate::internal::r#yield::parse_yield;
 use crate::internal::string::parse_string;
 use crate::internal::throw::parse_throw;
 use crate::internal::token_stream::TokenStream;
 use crate::internal::utils;
 use crate::internal::variable;
+use crate::internal::r#yield::parse_yield;
 
 pub fn parse_expression(stream: &mut TokenStream<'_, '_>) -> Result<Expression, ParseError> {
     parse_expression_with_precedence(stream, Precedence::Lowest)

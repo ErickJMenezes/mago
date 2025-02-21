@@ -1,8 +1,8 @@
 use indoc::indoc;
 use toml::Value;
 
-use mago_ast::ast::*;
 use mago_ast::Node;
+use mago_ast::ast::*;
 use mago_reporting::*;
 use mago_span::HasSpan;
 

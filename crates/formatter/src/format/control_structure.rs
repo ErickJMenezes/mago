@@ -1,17 +1,17 @@
 use mago_ast::*;
 use mago_span::HasSpan;
 
+use crate::Formatter;
 use crate::document::Document;
 use crate::document::Group;
 use crate::document::Line;
+use crate::format::Format;
 use crate::format::block::print_block_of_nodes;
 use crate::format::misc;
 use crate::format::misc::print_colon_delimited_body;
 use crate::format::statement::print_statement_sequence;
-use crate::format::Format;
 use crate::settings::*;
 use crate::wrap;
-use crate::Formatter;
 
 impl<'a> Format<'a> for If {
     fn format(&'a self, f: &mut Formatter<'a>) -> Document<'a> {

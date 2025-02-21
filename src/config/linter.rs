@@ -1,6 +1,6 @@
 use ahash::HashMap;
-use config::builder::BuilderState;
 use config::ConfigBuilder;
+use config::builder::BuilderState;
 use serde::Deserialize;
 use serde::Serialize;
 use toml::value::Value;

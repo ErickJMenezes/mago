@@ -94,11 +94,7 @@ where
         }
     }
 
-    if contains_non_empty_part {
-        non_empty_string_kind()
-    } else {
-        string_kind()
-    }
+    if contains_non_empty_part { non_empty_string_kind() } else { string_kind() }
 }
 
 #[inline]
@@ -142,11 +138,7 @@ where
             }
         }
         UnaryPrefixOperator::IntCast(_, _) | UnaryPrefixOperator::IntegerCast(_, _) => {
-            if value_kind.is_integer().is_true() {
-                value_kind
-            } else {
-                integer_kind()
-            }
+            if value_kind.is_integer().is_true() { value_kind } else { integer_kind() }
         }
         UnaryPrefixOperator::ObjectCast(_, _) => {
             if value_kind.is_object() {
@@ -310,11 +302,7 @@ where
                 let left_kind = extract_literal_value(&left_kind);
                 let right_kind = extract_literal_value(&right_kind);
 
-                if left_kind == right_kind {
-                    true_kind()
-                } else {
-                    false_kind()
-                }
+                if left_kind == right_kind { true_kind() } else { false_kind() }
             } else {
                 bool_kind()
             }
@@ -324,11 +312,7 @@ where
                 let left_kind = extract_literal_value(&left_kind);
                 let right_kind = extract_literal_value(&right_kind);
 
-                if left_kind != right_kind {
-                    true_kind()
-                } else {
-                    false_kind()
-                }
+                if left_kind != right_kind { true_kind() } else { false_kind() }
             } else {
                 bool_kind()
             }
@@ -338,11 +322,7 @@ where
                 let left_kind = extract_literal_value(&left_kind);
                 let right_kind = extract_literal_value(&right_kind);
 
-                if left_kind < right_kind {
-                    true_kind()
-                } else {
-                    false_kind()
-                }
+                if left_kind < right_kind { true_kind() } else { false_kind() }
             } else {
                 bool_kind()
             }
@@ -352,11 +332,7 @@ where
                 let left_kind = extract_literal_value(&left_kind);
                 let right_kind = extract_literal_value(&right_kind);
 
-                if left_kind > right_kind {
-                    true_kind()
-                } else {
-                    false_kind()
-                }
+                if left_kind > right_kind { true_kind() } else { false_kind() }
             } else {
                 bool_kind()
             }
@@ -366,11 +342,7 @@ where
                 let left_kind = extract_literal_value(&left_kind);
                 let right_kind = extract_literal_value(&right_kind);
 
-                if left_kind <= right_kind {
-                    true_kind()
-                } else {
-                    false_kind()
-                }
+                if left_kind <= right_kind { true_kind() } else { false_kind() }
             } else {
                 bool_kind()
             }
@@ -380,11 +352,7 @@ where
                 let left_kind = extract_literal_value(&left_kind);
                 let right_kind = extract_literal_value(&right_kind);
 
-                if left_kind >= right_kind {
-                    true_kind()
-                } else {
-                    false_kind()
-                }
+                if left_kind >= right_kind { true_kind() } else { false_kind() }
             } else {
                 bool_kind()
             }

@@ -9,9 +9,9 @@ use mago_interner::ThreadedInterner;
 use mago_source::Source;
 use mago_span::Span;
 
+use crate::document::Document;
 use crate::document::group::GroupIdentifier;
 use crate::document::group::GroupIdentifierBuilder;
-use crate::document::Document;
 use crate::format::Format;
 use crate::printer::Printer;
 use crate::settings::FormatSettings;

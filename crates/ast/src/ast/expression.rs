@@ -1,5 +1,5 @@
-use mago_php_version::feature::Feature;
 use mago_php_version::PHPVersion;
+use mago_php_version::feature::Feature;
 use serde::Deserialize;
 use serde::Serialize;
 use strum::Display;
@@ -22,9 +22,9 @@ use crate::ast::array::List;
 use crate::ast::assignment::Assignment;
 use crate::ast::binary::Binary;
 use crate::ast::call::Call;
+use crate::ast::class_like::AnonymousClass;
 use crate::ast::class_like::member::ClassLikeConstantSelector;
 use crate::ast::class_like::member::ClassLikeMemberSelector;
-use crate::ast::class_like::AnonymousClass;
 use crate::ast::clone::Clone;
 use crate::ast::closure_creation::ClosureCreation;
 use crate::ast::conditional::Conditional;
@@ -37,13 +37,13 @@ use crate::ast::instantiation::Instantiation;
 use crate::ast::keyword::Keyword;
 use crate::ast::literal::Literal;
 use crate::ast::magic_constant::MagicConstant;
-use crate::ast::r#yield::Yield;
 use crate::ast::string::CompositeString;
 use crate::ast::string::StringPart;
 use crate::ast::throw::Throw;
 use crate::ast::unary::UnaryPostfix;
 use crate::ast::unary::UnaryPrefix;
 use crate::ast::variable::Variable;
+use crate::ast::r#yield::Yield;
 use crate::node::NodeKind;
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize, PartialOrd, Ord)]

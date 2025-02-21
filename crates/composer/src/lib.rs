@@ -1,7 +1,7 @@
 use std::str::FromStr;
 
-use serde_json::from_str;
 use serde_json::Error;
+use serde_json::from_str;
 
 pub use crate::schema::*;
 

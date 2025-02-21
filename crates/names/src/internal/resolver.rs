@@ -4,9 +4,9 @@ use mago_interner::StringIdentifier;
 use mago_span::HasSpan;
 use mago_walker::MutWalker;
 
+use crate::Names;
 use crate::internal::context::NameContext;
 use crate::internal::context::NameKind;
-use crate::Names;
 
 #[derive(Debug, Clone)]
 pub struct NameResolver {

@@ -1276,11 +1276,7 @@ fn read_literal_string(input: &Input, quote: &u8) -> (TokenKind, usize) {
         }
     }
 
-    if partial {
-        (TokenKind::PartialLiteralString, length)
-    } else {
-        (TokenKind::LiteralString, length)
-    }
+    if partial { (TokenKind::PartialLiteralString, length) } else { (TokenKind::LiteralString, length) }
 }
 
 #[inline]

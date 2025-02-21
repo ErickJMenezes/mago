@@ -1,7 +1,7 @@
 use mago_ast::ast::*;
 use mago_ast::sequence::TokenSeparatedSequence;
-use mago_token::Token;
 use mago_token::T;
+use mago_token::Token;
 
 use crate::error::ParseError;
 use crate::internal::attribute;

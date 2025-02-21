@@ -1,8 +1,13 @@
 pub mod combine_consecutive_issets;
 pub mod disallowed_functions;
+pub mod dont_catch_error;
 pub mod excessive_nesting;
 pub mod loop_does_not_iterate;
+pub mod no_boolean_flag_parameter;
+pub mod no_boolean_literal_comparison;
 pub mod no_debug_symbols;
+pub mod no_else_clause;
+pub mod no_empty_catch_clause;
 pub mod no_empty_loop;
 pub mod no_goto;
 pub mod no_hash_emoji;

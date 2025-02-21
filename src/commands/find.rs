@@ -6,15 +6,15 @@ use clap::Parser;
 use mago_interner::ThreadedInterner;
 use mago_project::module::Module;
 use mago_project::module::ModuleBuildOptions;
-use mago_reference::query::Query;
 use mago_reference::Reference;
 use mago_reference::ReferenceFinder;
 use mago_reference::ReferenceKind;
+use mago_reference::query::Query;
+use mago_reporting::Annotation;
+use mago_reporting::Issue;
 use mago_reporting::reporter::Reporter;
 use mago_reporting::reporter::ReportingFormat;
 use mago_reporting::reporter::ReportingTarget;
-use mago_reporting::Annotation;
-use mago_reporting::Issue;
 use mago_source::SourceCategory;
 use mago_source::SourceManager;
 
@@ -22,9 +22,9 @@ use crate::config::Configuration;
 use crate::enum_variants;
 use crate::error::Error;
 use crate::source;
+use crate::utils::progress::ProgressBarTheme;
 use crate::utils::progress::create_progress_bar;
 use crate::utils::progress::remove_progress_bar;
-use crate::utils::progress::ProgressBarTheme;
 
 /// The `find` subcommand used to locate references to a symbol (or pattern) in the codebase.
 ///

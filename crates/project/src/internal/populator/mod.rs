@@ -1,10 +1,10 @@
 use mago_interner::ThreadedInterner;
+use mago_reflection::CodebaseReflection;
+use mago_reflection::Reflection;
 use mago_reflection::class_like::ClassLikeReflection;
 use mago_reflection::identifier::ClassLikeName;
 use mago_reflection::identifier::FunctionLikeName;
 use mago_reflection::identifier::Name;
-use mago_reflection::CodebaseReflection;
-use mago_reflection::Reflection;
 
 mod report;
 
@@ -35,11 +35,7 @@ fn populate_all_class_like_reflections(
                 return None;
             }
 
-            if !reflection.is_populated {
-                Some(*name)
-            } else {
-                None
-            }
+            if !reflection.is_populated { Some(*name) } else { None }
         })
         .collect::<Vec<_>>();
 
@@ -101,11 +97,7 @@ fn populate_all_function_like_reflections(codebase: &mut CodebaseReflection, pop
                 return None;
             }
 
-            if !reflection.is_populated {
-                Some(*name)
-            } else {
-                None
-            }
+            if !reflection.is_populated { Some(*name) } else { None }
         })
         .collect::<Vec<_>>();
 
@@ -124,11 +116,7 @@ fn populate_all_constant_reflections(codebase: &mut CodebaseReflection, populate
                 return None;
             }
 
-            if !reflection.is_populated {
-                Some(*name)
-            } else {
-                None
-            }
+            if !reflection.is_populated { Some(*name) } else { None }
         })
         .collect::<Vec<_>>();
 
@@ -222,7 +210,7 @@ fn implement_magic_interfaces(
     const UNIT_ENUM_INTERFACE: &str = "unitenum";
     const BACKED_ENUM_INTERFACE: &str = "backedenum";
     const STRINGABLE_INTERFACE: &str = "stringable";
-    const TO_STRING_METHOD: &str = "__toString";
+    const TO_STRING_METHOD: &str = "__tostring";
 
     let implement_interface = |reflection: &mut ClassLikeReflection, interface_name| {
         // Check if the interface is already implemented.
@@ -260,7 +248,6 @@ fn implement_magic_interfaces(
 
     'stringable_interface: {
         let to_string_method = interner.intern(TO_STRING_METHOD);
-
         if !reflection.methods.appering_members.contains_key(&to_string_method) {
             break 'stringable_interface;
         }

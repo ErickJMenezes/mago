@@ -18,6 +18,7 @@ jobs:
       - name: extract crate information
         id: crate_metadata
         run: |
+          rustup update stable
           cargo metadata --no-deps --format-version 1 | jq -r '
             .packages[0] |
             [

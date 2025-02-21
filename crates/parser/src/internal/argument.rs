@@ -10,11 +10,7 @@ use crate::internal::utils;
 
 pub fn parse_optional_argument_list(stream: &mut TokenStream<'_, '_>) -> Result<Option<ArgumentList>, ParseError> {
     let next = utils::peek(stream)?;
-    if next.kind == T!["("] {
-        Ok(Some(parse_argument_list(stream)?))
-    } else {
-        Ok(None)
-    }
+    if next.kind == T!["("] { Ok(Some(parse_argument_list(stream)?)) } else { Ok(None) }
 }
 
 pub fn parse_argument_list(stream: &mut TokenStream<'_, '_>) -> Result<ArgumentList, ParseError> {

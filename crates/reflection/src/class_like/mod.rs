@@ -10,6 +10,7 @@ use mago_source::SourceIdentifier;
 use mago_span::HasSpan;
 use mago_span::Span;
 
+use crate::Reflection;
 use crate::attribute::AttributeReflection;
 use crate::class_like::constant::ClassLikeConstantReflection;
 use crate::class_like::enum_case::EnumCaseReflection;
@@ -20,7 +21,6 @@ use crate::function_like::FunctionLikeReflection;
 use crate::identifier::ClassLikeName;
 use crate::identifier::Name;
 use crate::r#type::TypeReflection;
-use crate::Reflection;
 
 pub mod constant;
 pub mod enum_case;

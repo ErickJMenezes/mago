@@ -99,11 +99,7 @@ impl HasSpan for Yield {
 
 impl HasSpan for YieldValue {
     fn span(&self) -> Span {
-        if let Some(value) = &self.value {
-            self.r#yield.span().join(value.span())
-        } else {
-            self.r#yield.span()
-        }
+        if let Some(value) = &self.value { self.r#yield.span().join(value.span()) } else { self.r#yield.span() }
     }
 }
 

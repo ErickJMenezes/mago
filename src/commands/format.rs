@@ -17,9 +17,9 @@ use crate::config::Configuration;
 use crate::error::Error;
 use crate::source;
 use crate::utils;
+use crate::utils::progress::ProgressBarTheme;
 use crate::utils::progress::create_progress_bar;
 use crate::utils::progress::remove_progress_bar;
-use crate::utils::progress::ProgressBarTheme;
 
 /// Represents the `format` command, which is responsible for formatting source files
 /// according to specified rules in the configuration file.

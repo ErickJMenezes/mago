@@ -224,11 +224,7 @@ impl<'a> Input<'a> {
         let (from, until) = self.calculate_bound(search.len());
         let slice = &self.bytes[from..until];
 
-        if ignore_ascii_case {
-            slice.eq_ignore_ascii_case(search)
-        } else {
-            slice == search
-        }
+        if ignore_ascii_case { slice.eq_ignore_ascii_case(search) } else { slice == search }
     }
 
     /// Attempts to match the given byte sequence at the current position, ignoring whitespace in the input.

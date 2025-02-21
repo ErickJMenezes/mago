@@ -8,12 +8,12 @@ use strum::VariantNames;
 use mago_interner::ThreadedInterner;
 use mago_source::SourceManager;
 
-use crate::error::ReportingError;
-use crate::internal::emitter::Emitter;
-use crate::internal::writer::ReportWriter;
 use crate::Issue;
 use crate::IssueCollection;
 use crate::Level;
+use crate::error::ReportingError;
+use crate::internal::emitter::Emitter;
+use crate::internal::writer::ReportWriter;
 
 /// Defines the output target for the `ReportWriter`.
 #[derive(Default, Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize, Display, VariantNames)]

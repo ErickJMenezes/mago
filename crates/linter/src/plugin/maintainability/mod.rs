@@ -3,6 +3,7 @@ use crate::plugin::maintainability::rules::cyclomatic_complexity::CyclomaticComp
 use crate::plugin::maintainability::rules::excessive_parameter_list::ExcessiveParameterListRule;
 use crate::plugin::maintainability::rules::halstead::HalsteadRule;
 use crate::plugin::maintainability::rules::kan_defect::KanDefectRule;
+use crate::plugin::maintainability::rules::long_inheritance_chain::LongInheritanceChainRule;
 use crate::plugin::maintainability::rules::too_many_enum_cases::TooManyEnumCasesRule;
 use crate::plugin::maintainability::rules::too_many_methods::TooManyMethodsRule;
 use crate::plugin::maintainability::rules::too_many_properties::TooManyPropertiesRule;
@@ -30,6 +31,7 @@ impl Plugin for MaintainabilityPlugin {
             Box::new(ExcessiveParameterListRule),
             Box::new(HalsteadRule),
             Box::new(KanDefectRule),
+            Box::new(LongInheritanceChainRule),
             Box::new(TooManyEnumCasesRule),
             Box::new(TooManyMethodsRule),
             Box::new(TooManyPropertiesRule),

@@ -1,12 +1,12 @@
 use std::sync::Arc;
 use std::thread;
 
-use criterion::black_box;
-use criterion::criterion_group;
-use criterion::criterion_main;
 use criterion::BenchmarkId;
 use criterion::Criterion;
 use criterion::Throughput;
+use criterion::black_box;
+use criterion::criterion_group;
+use criterion::criterion_main;
 
 use mago_interner::Interner;
 use mago_interner::ThreadedInterner;

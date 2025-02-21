@@ -1,9 +1,9 @@
 use mago_ast::Expression;
 use mago_interner::ThreadedInterner;
 use mago_names::Names;
-use mago_reflection::r#type::kind::TypeKind;
-use mago_reflection::r#type::TypeReflection;
 use mago_reflection::CodebaseReflection;
+use mago_reflection::r#type::TypeReflection;
+use mago_reflection::r#type::kind::TypeKind;
 use mago_source::Source;
 use mago_span::HasSpan;
 

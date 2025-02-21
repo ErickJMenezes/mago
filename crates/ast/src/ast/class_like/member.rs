@@ -5,6 +5,7 @@ use strum::Display;
 use mago_span::HasSpan;
 use mago_span::Span;
 
+use crate::Sequence;
 use crate::ast::class_like::constant::ClassLikeConstant;
 use crate::ast::class_like::enum_case::EnumCase;
 use crate::ast::class_like::method::Method;
@@ -13,7 +14,6 @@ use crate::ast::class_like::trait_use::TraitUse;
 use crate::ast::expression::Expression;
 use crate::ast::identifier::LocalIdentifier;
 use crate::ast::variable::Variable;
-use crate::Sequence;
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize, PartialOrd, Ord, Display)]
 #[serde(tag = "type", content = "value")]

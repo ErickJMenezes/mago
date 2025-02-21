@@ -5,9 +5,9 @@ use mago_source::SourceManager;
 use serde::Serialize;
 use termcolor::WriteColor;
 
-use crate::error::ReportingError;
 use crate::IssueCollection;
 use crate::Level;
+use crate::error::ReportingError;
 
 use super::utils::long_message;
 

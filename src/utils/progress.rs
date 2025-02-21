@@ -61,12 +61,24 @@ impl ProgressBarTheme {
     /// Returns the template string for the selected theme, defining the layout and appearance of the progress bar.
     pub fn template(&self) -> &'static str {
         match self {
-            Self::Red => "{spinner} {prefix:<16.bold}▕{wide_bar:.red}▏{pos:>6}/{len}▕  {percent:>3}%▕  ETA: {eta_precise}▕  Elapsed: {elapsed_precise}",
-            Self::Yellow => "{spinner} {prefix:<16.bold}▕{wide_bar:.yellow}▏{pos:>6}/{len}▕  {percent:>3}%▕  ETA: {eta_precise}▕  Elapsed: {elapsed_precise}",
-            Self::Green => "{spinner} {prefix:<16.bold}▕{wide_bar:.green}▏{pos:>6}/{len}▕  {percent:>3}%▕  ETA: {eta_precise}▕  Elapsed: {elapsed_precise}",
-            Self::Blue => "{spinner} {prefix:<16.bold}▕{wide_bar:.blue}▏{pos:>6}/{len}▕  {percent:>3}%▕  ETA: {eta_precise}▕  Elapsed: {elapsed_precise}",
-            Self::Magenta => "{spinner} {prefix:<16.bold}▕{wide_bar:.magenta}▏{pos:>6}/{len}▕  {percent:>3}%▕  ETA: {eta_precise}▕  Elapsed: {elapsed_precise}",
-            Self::Cyan => "{spinner} {prefix:<16.bold}▕{wide_bar:.cyan}▏{pos:>6}/{len}▕  {percent:>3}%▕  ETA: {eta_precise}▕  Elapsed: {elapsed_precise}",
+            Self::Red => {
+                "{spinner} {prefix:<16.bold}▕{wide_bar:.red}▏{pos:>6}/{len}▕  {percent:>3}%▕  ETA: {eta_precise}▕  Elapsed: {elapsed_precise}"
+            }
+            Self::Yellow => {
+                "{spinner} {prefix:<16.bold}▕{wide_bar:.yellow}▏{pos:>6}/{len}▕  {percent:>3}%▕  ETA: {eta_precise}▕  Elapsed: {elapsed_precise}"
+            }
+            Self::Green => {
+                "{spinner} {prefix:<16.bold}▕{wide_bar:.green}▏{pos:>6}/{len}▕  {percent:>3}%▕  ETA: {eta_precise}▕  Elapsed: {elapsed_precise}"
+            }
+            Self::Blue => {
+                "{spinner} {prefix:<16.bold}▕{wide_bar:.blue}▏{pos:>6}/{len}▕  {percent:>3}%▕  ETA: {eta_precise}▕  Elapsed: {elapsed_precise}"
+            }
+            Self::Magenta => {
+                "{spinner} {prefix:<16.bold}▕{wide_bar:.magenta}▏{pos:>6}/{len}▕  {percent:>3}%▕  ETA: {eta_precise}▕  Elapsed: {elapsed_precise}"
+            }
+            Self::Cyan => {
+                "{spinner} {prefix:<16.bold}▕{wide_bar:.cyan}▏{pos:>6}/{len}▕  {percent:>3}%▕  ETA: {eta_precise}▕  Elapsed: {elapsed_precise}"
+            }
         }
     }
 

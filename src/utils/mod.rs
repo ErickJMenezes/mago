@@ -90,11 +90,7 @@ pub fn indent_multiline(text: &str, indent_str: &str, indent_first_line: bool) -
         .enumerate()
         .map(|(i, line)| {
             if i == 0 {
-                if indent_first_line {
-                    format!("{}{}", indent_str, line)
-                } else {
-                    line.to_string()
-                }
+                if indent_first_line { format!("{}{}", indent_str, line) } else { line.to_string() }
             } else {
                 format!("{}{}", indent_str, line)
             }

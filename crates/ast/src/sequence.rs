@@ -139,11 +139,7 @@ impl<T: HasSpan> TokenSeparatedSequence<T> {
         match (self.tokens.first(), self.nodes.first()) {
             (Some(token), Some(node)) => {
                 // check if the token comes before the node
-                if token.span.end <= node.span().start {
-                    Some(token.span)
-                } else {
-                    Some(node.span())
-                }
+                if token.span.end <= node.span().start { Some(token.span) } else { Some(node.span()) }
             }
             (Some(token), None) => Some(token.span),
             (None, Some(node)) => Some(node.span()),
@@ -161,11 +157,7 @@ impl<T: HasSpan> TokenSeparatedSequence<T> {
         match (self.tokens.last(), self.nodes.last()) {
             (Some(token), Some(node)) => {
                 // check if the token comes after the node
-                if token.span.start >= node.span().end {
-                    Some(token.span)
-                } else {
-                    Some(node.span())
-                }
+                if token.span.start >= node.span().end { Some(token.span) } else { Some(node.span()) }
             }
             (Some(token), None) => Some(token.span),
             (None, Some(node)) => Some(node.span()),

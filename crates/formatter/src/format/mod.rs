@@ -2,13 +2,14 @@ use mago_ast::*;
 use mago_span::HasSpan;
 use mago_span::Span;
 
+use crate::Formatter;
 use crate::comment::CommentFlags;
 use crate::document::*;
-use crate::format::assignment::print_assignment;
 use crate::format::assignment::AssignmentLikeNode;
+use crate::format::assignment::print_assignment;
 use crate::format::block::print_block_of_nodes;
-use crate::format::call_node::print_call_like_node;
 use crate::format::call_node::CallLikeNode;
+use crate::format::call_node::print_call_like_node;
 use crate::format::class_like::print_class_like_body;
 use crate::format::misc::has_new_line_in_range;
 use crate::format::misc::print_attribute_list_sequence;
@@ -20,7 +21,6 @@ use crate::settings::*;
 use crate::utils::get_left_side;
 use crate::utils::has_naked_left_side;
 use crate::wrap;
-use crate::Formatter;
 
 pub mod array;
 pub mod assignment;
@@ -1054,11 +1054,7 @@ impl<'a> Format<'a> for Class {
                 ])),
             ]));
 
-            if let Some(attributes) = attributes {
-                Document::Group(Group::new(vec![attributes, class]))
-            } else {
-                class
-            }
+            if let Some(attributes) = attributes { Document::Group(Group::new(vec![attributes, class])) } else { class }
         })
     }
 }
@@ -1599,11 +1595,7 @@ impl<'a> Format<'a> for PropertyHook {
                 Document::Group(Group::new(contents))
             };
 
-            if let Some(attributes) = attributes {
-                Document::Group(Group::new(vec![attributes, hook]))
-            } else {
-                hook
-            }
+            if let Some(attributes) = attributes { Document::Group(Group::new(vec![attributes, hook])) } else { hook }
         })
     }
 }

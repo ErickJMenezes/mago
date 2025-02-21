@@ -169,20 +169,12 @@ impl HasSpan for PrintConstruct {
 
 impl HasSpan for ExitConstruct {
     fn span(&self) -> Span {
-        if let Some(arguments) = &self.arguments {
-            self.exit.span().join(arguments.span())
-        } else {
-            self.exit.span()
-        }
+        if let Some(arguments) = &self.arguments { self.exit.span().join(arguments.span()) } else { self.exit.span() }
     }
 }
 
 impl HasSpan for DieConstruct {
     fn span(&self) -> Span {
-        if let Some(arguments) = &self.arguments {
-            self.die.span().join(arguments.span())
-        } else {
-            self.die.span()
-        }
+        if let Some(arguments) = &self.arguments { self.die.span().join(arguments.span()) } else { self.die.span() }
     }
 }

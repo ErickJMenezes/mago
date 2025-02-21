@@ -1,24 +1,27 @@
-use mago_php_version::PHPVersion;
-use mago_reporting::Annotation;
-use mago_reporting::AnnotationKind;
-use mago_span::HasSpan;
 use toml::value::Value;
 
-use mago_ast::Hint;
-use mago_ast::Identifier;
+use mago_ast::*;
 use mago_fixer::FixPlan;
 use mago_interner::StringIdentifier;
 use mago_interner::ThreadedInterner;
+use mago_php_version::PHPVersion;
 use mago_project::module::Module;
 use mago_reflection::CodebaseReflection;
+use mago_reporting::Annotation;
+use mago_reporting::AnnotationKind;
 use mago_reporting::Issue;
 use mago_reporting::Level;
 use mago_span::HasPosition;
+use mago_span::HasSpan;
 
 use crate::ast::AstNode;
 use crate::directive::LintDirective;
 use crate::ignore::IgnoreDirective;
 use crate::rule::ConfiguredRule;
+use crate::scope::ClassLikeScope;
+use crate::scope::FunctionLikeScope;
+use crate::scope::Scope;
+use crate::scope::ScopeStack;
 
 #[derive(Debug)]
 pub struct LintContext<'a> {
@@ -28,6 +31,7 @@ pub struct LintContext<'a> {
     pub codebase: &'a CodebaseReflection,
     pub module: &'a Module,
     pub ignores: Vec<&'a IgnoreDirective<'a>>,
+    pub scope: ScopeStack,
 
     unused_ignores: Vec<&'a IgnoreDirective<'a>>,
     issues: Vec<Issue>,
@@ -49,6 +53,7 @@ impl LintContext<'_> {
             codebase,
             module,
             ignores,
+            scope: ScopeStack::new(),
             unused_ignores: Vec::new(),
             issues: Vec::new(),
         }
@@ -418,23 +423,56 @@ impl LintContext<'_> {
             return false;
         }
 
+        let should_pop_scope = if let Some(scope) = match ast_node.node {
+            Node::Class(class) => Some(Scope::ClassLike(ClassLikeScope::Class(*self.module.names.get(&class.name)))),
+            Node::Interface(interface) => {
+                Some(Scope::ClassLike(ClassLikeScope::Interface(*self.module.names.get(&interface.name))))
+            }
+            Node::Trait(r#trait) => {
+                Some(Scope::ClassLike(ClassLikeScope::Trait(*self.module.names.get(&r#trait.name))))
+            }
+            Node::Enum(r#enum) => Some(Scope::ClassLike(ClassLikeScope::Enum(*self.module.names.get(&r#enum.name)))),
+            Node::AnonymousClass(class) => Some(Scope::ClassLike(ClassLikeScope::AnonymousClass(class.span()))),
+            Node::Function(function) => {
+                Some(Scope::FunctionLike(FunctionLikeScope::Function(*self.module.names.get(&function.name))))
+            }
+            Node::Method(method) => Some(Scope::FunctionLike(FunctionLikeScope::Method(method.name.value))),
+            Node::Closure(closure) => Some(Scope::FunctionLike(FunctionLikeScope::Closure(closure.span()))),
+            Node::ArrowFunction(arrow_function) => {
+                Some(Scope::FunctionLike(FunctionLikeScope::ArrowFunction(arrow_function.span())))
+            }
+            _ => None,
+        } {
+            self.scope.push(scope);
+            true
+        } else {
+            false
+        };
+
         // Apply the lint rule to the current node.
         let directive = self.rule.rule.lint_node(ast_node.node, self);
-
-        match directive {
-            LintDirective::Continue => {
-                // Recurse into each child node.
-                for child in &ast_node.children {
-                    if self.lint(child) {
-                        return true;
+        let result = 'lint: {
+            match directive {
+                LintDirective::Continue => {
+                    // Recurse into each child node.
+                    for child in &ast_node.children {
+                        if self.lint(child) {
+                            break 'lint true;
+                        }
                     }
-                }
 
-                false
+                    false
+                }
+                LintDirective::Prune => false, // Skip children.
+                LintDirective::Abort => true,  // Abort the current branch.
             }
-            LintDirective::Prune => false, // Skip children.
-            LintDirective::Abort => true,  // Abort the current branch.
+        };
+
+        if should_pop_scope {
+            self.scope.pop();
         }
+
+        result
     }
 
     /// Finalizes the linting context by reporting any remaining unused ignore directives.

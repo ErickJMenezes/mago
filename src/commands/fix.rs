@@ -14,9 +14,9 @@ use crate::config::Configuration;
 use crate::error::Error;
 use crate::source;
 use crate::utils;
+use crate::utils::progress::ProgressBarTheme;
 use crate::utils::progress::create_progress_bar;
 use crate::utils::progress::remove_progress_bar;
-use crate::utils::progress::ProgressBarTheme;
 
 #[derive(Parser, Debug)]
 #[command(
@@ -40,15 +40,11 @@ pub struct FixCommand {
     pub plugins: Vec<String>,
 
     /// Apply fixes that are marked as unsafe, including potentially unsafe fixes.
-    #[arg(
-        long,
-        short = 'u',
-        help = "Apply fixes marked as unsafe, including those with potentially destructive changes"
-    )]
+    #[arg(long, help = "Apply fixes marked as unsafe, including those with potentially destructive changes")]
     pub r#unsafe: bool,
 
     /// Apply fixes that are marked as potentially unsafe.
-    #[arg(long, short = 'p', help = "Apply fixes marked as potentially unsafe, which may require manual review")]
+    #[arg(long, help = "Apply fixes marked as potentially unsafe, which may require manual review")]
     pub potentially_unsafe: bool,
 
     /// Run the command without writing any changes to disk.

@@ -1,14 +1,14 @@
 use mago_ast::*;
 use mago_span::*;
 
+use crate::Formatter;
 use crate::comment::CommentFlags;
 use crate::document::Document;
 use crate::document::Group;
 use crate::document::IndentIfBreak;
 use crate::document::Line;
-use crate::format::binaryish::should_inline_logical_or_coalesce_expression;
 use crate::format::Format;
-use crate::Formatter;
+use crate::format::binaryish::should_inline_logical_or_coalesce_expression;
 
 /// Represents nodes in the Abstract Syntax Tree (AST) that involve assignment-like operations.
 #[derive(Debug, Clone, Copy)]

@@ -1,6 +1,6 @@
 use mago_ast::ast::*;
-use mago_reflection::class_like::ClassLikeReflection;
 use mago_reflection::CodebaseReflection;
+use mago_reflection::class_like::ClassLikeReflection;
 use mago_walker::MutWalker;
 
 use crate::internal::context::Context;

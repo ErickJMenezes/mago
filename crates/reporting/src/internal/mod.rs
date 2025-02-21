@@ -6,9 +6,9 @@ use serde::Serialize;
 
 use mago_fixer::FixPlan;
 use mago_interner::ThreadedInterner;
-use mago_source::error::SourceError;
 use mago_source::SourceIdentifier;
 use mago_source::SourceManager;
+use mago_source::error::SourceError;
 use mago_span::Position;
 use mago_span::Span;
 

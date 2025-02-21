@@ -1,6 +1,6 @@
+use mago_ast::Sequence;
 use mago_ast::ast::*;
 use mago_ast::sequence::TokenSeparatedSequence;
-use mago_ast::Sequence;
 use mago_token::T;
 
 use crate::error::ParseError;

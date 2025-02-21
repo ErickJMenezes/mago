@@ -46,7 +46,7 @@ pub fn parse_literal(stream: &mut TokenStream<'_, '_>) -> Result<Literal, ParseE
                 stream,
                 Some(token),
                 T!["true", "false", "null", LiteralFloat, LiteralInteger, LiteralString, PartialLiteralString],
-            ))
+            ));
         }
     })
 }

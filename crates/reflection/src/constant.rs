@@ -8,10 +8,10 @@ use mago_source::SourceIdentifier;
 use mago_span::HasSpan;
 use mago_span::Span;
 
+use crate::Reflection;
 use crate::attribute::AttributeReflection;
 use crate::identifier::Name;
 use crate::r#type::TypeReflection;
-use crate::Reflection;
 
 /// Represents a constant reflection in the codebase.
 ///

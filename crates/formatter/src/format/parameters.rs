@@ -1,10 +1,10 @@
 use mago_ast::*;
 use mago_span::*;
 
+use crate::Formatter;
 use crate::comment::CommentFlags;
 use crate::document::*;
 use crate::format::Format;
-use crate::Formatter;
 
 pub(super) fn should_hug_the_only_parameter<'a>(
     f: &mut Formatter<'a>,

@@ -1,8 +1,8 @@
 use mago_ast::*;
 
+use crate::Formatter;
 use crate::document::Document;
 use crate::document::IndentIfBreak;
-use crate::Formatter;
 
 pub const fn has_naked_left_side(expression: &Expression) -> bool {
     matches!(

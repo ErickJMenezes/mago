@@ -1,8 +1,8 @@
 use mago_interner::ThreadedInterner;
 use mago_project::module::Module;
 
-use crate::query::Query;
 use crate::Reference;
+use crate::query::Query;
 
 #[derive(Debug, Clone)]
 pub struct Context<'a> {

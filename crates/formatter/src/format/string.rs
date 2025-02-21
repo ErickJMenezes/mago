@@ -21,11 +21,7 @@ fn get_preferred_quote(raw: &str, enclosing_quote: char, prefer_single_quote: bo
         }
     }
 
-    if preferred_quote_count > alternate_quote_count {
-        alternate_quote_char
-    } else {
-        preferred_quote_char
-    }
+    if preferred_quote_count > alternate_quote_count { alternate_quote_char } else { preferred_quote_char }
 }
 
 fn make_string(raw_text: &str, enclosing_quote: char) -> String {

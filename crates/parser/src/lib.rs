@@ -1,8 +1,8 @@
-use mago_ast::sequence::Sequence;
 use mago_ast::Program;
+use mago_ast::sequence::Sequence;
 use mago_interner::ThreadedInterner;
-use mago_lexer::input::Input;
 use mago_lexer::Lexer;
+use mago_lexer::input::Input;
 use mago_source::Source;
 
 use crate::error::ParseError;

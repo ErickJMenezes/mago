@@ -2,15 +2,15 @@ use mago_ast::*;
 use mago_span::HasSpan;
 use mago_span::Span;
 
+use crate::Formatter;
 use crate::comment::CommentFlags;
 use crate::document::Document;
 use crate::document::Group;
 use crate::document::Line;
 use crate::document::Separator;
-use crate::format::statement::print_statement_sequence;
 use crate::format::Format;
+use crate::format::statement::print_statement_sequence;
 use crate::settings::BraceStyle;
-use crate::Formatter;
 
 pub(super) fn has_new_line_in_range(text: &str, start: usize, end: usize) -> bool {
     text[start..end].contains('\n')

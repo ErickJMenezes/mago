@@ -1,13 +1,13 @@
 use mago_ast::*;
 use mago_span::*;
 
+use crate::Formatter;
 use crate::document::Document;
 use crate::document::Group;
 use crate::document::IfBreak;
 use crate::document::Line;
-use crate::format::misc;
 use crate::format::Format;
-use crate::Formatter;
+use crate::format::misc;
 
 use super::misc::is_string_word_type;
 use super::misc::should_hug_expression;

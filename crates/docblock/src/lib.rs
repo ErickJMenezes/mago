@@ -372,7 +372,7 @@ mod tests {
                 // The expected and found indentation lengths
                 assert_eq!(expected, 4); // Assuming 4 spaces
                 assert_eq!(found, 6); // Assuming 6 spaces
-                                      // The error_span should point to the line with inconsistent indentation
+                // The error_span should point to the line with inconsistent indentation
                 let inconsistent_line = "      * With inconsistent indentation";
                 let line_start = phpdoc.find(inconsistent_line).unwrap();
                 let indent_length = inconsistent_line.chars().take_while(|c| c.is_whitespace()).count();

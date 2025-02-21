@@ -2,10 +2,10 @@ use mago_ast::*;
 use mago_span::HasSpan;
 use mago_token::GetPrecedence;
 
+use crate::Formatter;
 use crate::binaryish::should_flatten;
 use crate::document::Document;
 use crate::document::Group;
-use crate::Formatter;
 
 impl<'a> Formatter<'a> {
     pub(crate) fn wrap_parens(&mut self, document: Document<'a>, node: Node<'a>) -> Document<'a> {
@@ -307,10 +307,6 @@ impl<'a> Formatter<'a> {
     }
 
     const fn is_conditional(&self, node: Node<'a>) -> bool {
-        if let Node::Conditional(op) = node {
-            op.then.is_some()
-        } else {
-            false
-        }
+        if let Node::Conditional(op) = node { op.then.is_some() } else { false }
     }
 }

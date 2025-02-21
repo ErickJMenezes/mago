@@ -2,9 +2,9 @@ use std::io::Result;
 use std::io::Stderr;
 use std::io::Write;
 
+use tracing_subscriber::EnvFilter;
 use tracing_subscriber::filter::Directive;
 use tracing_subscriber::fmt;
-use tracing_subscriber::EnvFilter;
 
 use crate::utils::progress::GLOBAL_PROGRESS_MANAGER;
 

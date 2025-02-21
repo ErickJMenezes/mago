@@ -2,9 +2,9 @@ use mago_ast::*;
 use mago_span::*;
 use mago_walker::Walker;
 
-use crate::internal::context::Context;
 use crate::Reference;
 use crate::ReferenceKind;
+use crate::internal::context::Context;
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash)]
 pub struct ReferenceFindingWalker;

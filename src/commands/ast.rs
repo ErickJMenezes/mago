@@ -4,15 +4,15 @@ use clap::Parser;
 use serde_json::json;
 use termtree::Tree;
 
-use mago_ast::node::NodeKind;
 use mago_ast::Node;
+use mago_ast::node::NodeKind;
 use mago_interner::ThreadedInterner;
 use mago_names::Names;
 use mago_parser::parse_source;
+use mago_reporting::Issue;
 use mago_reporting::reporter::Reporter;
 use mago_reporting::reporter::ReportingFormat;
 use mago_reporting::reporter::ReportingTarget;
-use mago_reporting::Issue;
 use mago_source::SourceCategory;
 use mago_source::SourceManager;
 

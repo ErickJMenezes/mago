@@ -146,21 +146,13 @@ impl HasSpan for MixedUseItemList {
 
 impl HasSpan for MaybeTypedUseItem {
     fn span(&self) -> Span {
-        if let Some(r#type) = &self.r#type {
-            r#type.span().join(self.item.span())
-        } else {
-            self.item.span()
-        }
+        if let Some(r#type) = &self.r#type { r#type.span().join(self.item.span()) } else { self.item.span() }
     }
 }
 
 impl HasSpan for UseItem {
     fn span(&self) -> Span {
-        if let Some(alias) = &self.alias {
-            self.name.span().join(alias.span())
-        } else {
-            self.name.span()
-        }
+        if let Some(alias) = &self.alias { self.name.span().join(alias.span()) } else { self.name.span() }
     }
 }
 

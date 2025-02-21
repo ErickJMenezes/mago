@@ -517,20 +517,12 @@ impl TokenKind {
 
     #[inline(always)]
     pub const fn is_identifier_maybe_soft_reserved(&self) -> bool {
-        if let TokenKind::Identifier = self {
-            true
-        } else {
-            self.is_soft_reserved_identifier()
-        }
+        if let TokenKind::Identifier = self { true } else { self.is_soft_reserved_identifier() }
     }
 
     #[inline(always)]
     pub const fn is_identifier_maybe_reserved(&self) -> bool {
-        if let TokenKind::Identifier = self {
-            true
-        } else {
-            self.is_reserved_identifier()
-        }
+        if let TokenKind::Identifier = self { true } else { self.is_reserved_identifier() }
     }
 
     #[inline(always)]

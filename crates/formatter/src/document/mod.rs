@@ -117,11 +117,7 @@ impl<'a> Fill<'a> {
     }
 
     pub fn dequeue(&mut self) -> Option<Document<'a>> {
-        if !self.parts.is_empty() {
-            Some(self.parts.remove(0))
-        } else {
-            None
-        }
+        if !self.parts.is_empty() { Some(self.parts.remove(0)) } else { None }
     }
 
     pub fn enqueue(&mut self, doc: Document<'a>) {
@@ -231,11 +227,7 @@ fn print_doc_to_debug(doc: &Document) -> String {
         Document::String(s) => format!("{:?}", s),
         Document::Array(docs) => {
             let printed: Vec<String> = docs.iter().map(|d| print_doc_to_debug(d)).collect();
-            if printed.len() == 1 {
-                printed[0].clone()
-            } else {
-                format!("[{}]", printed.join(", "))
-            }
+            if printed.len() == 1 { printed[0].clone() } else { format!("[{}]", printed.join(", ")) }
         }
         Document::Indent(docs) => {
             format!("indent({})", print_doc_to_debug(&Document::Array(docs.clone())))

@@ -1,31 +1,31 @@
 use mago_ast::*;
 use mago_span::HasSpan;
 
+use crate::Formatter;
 use crate::document::Document;
 use crate::document::Line;
-use crate::format::array::print_array_like;
+use crate::format::Group;
+use crate::format::IfBreak;
+use crate::format::IndentIfBreak;
+use crate::format::Separator;
 use crate::format::array::ArrayLike;
-use crate::format::assignment::print_assignment;
+use crate::format::array::print_array_like;
 use crate::format::assignment::AssignmentLikeNode;
+use crate::format::assignment::print_assignment;
 use crate::format::binaryish;
 use crate::format::call::collect_method_call_chain;
 use crate::format::call::print_method_call_chain;
 use crate::format::call_arguments::print_argument_list;
-use crate::format::call_node::print_call_like_node;
 use crate::format::call_node::CallLikeNode;
+use crate::format::call_node::print_call_like_node;
 use crate::format::class_like::print_class_like_body;
 use crate::format::misc;
 use crate::format::misc::print_attribute_list_sequence;
 use crate::format::misc::print_condition;
 use crate::format::misc::print_modifiers;
 use crate::format::string::print_string;
-use crate::format::Group;
-use crate::format::IfBreak;
-use crate::format::IndentIfBreak;
-use crate::format::Separator;
 use crate::settings::*;
 use crate::wrap;
-use crate::Formatter;
 
 use crate::format::Format;
 

@@ -287,9 +287,8 @@ pub fn check_namespace(namespace: &Namespace, context: &mut Context<'_>) {
 
 #[inline]
 pub fn check_goto(goto: &Goto, context: &mut Context<'_>) {
-    let all_labels =
-        Node::Program(context.program)
-            .filter_map(|node| if let Node::Label(label) = node { Some(*label) } else { None });
+    let all_labels = Node::Program(context.program)
+        .filter_map(|node| if let Node::Label(label) = node { Some(*label) } else { None });
 
     if all_labels.iter().any(|l| l.name.value == goto.label.value) {
         return;

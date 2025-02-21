@@ -1,13 +1,13 @@
 use mago_ast::*;
 
+use crate::Formatter;
 use crate::document::Document;
 use crate::document::Group;
 use crate::format::Format;
-use crate::Formatter;
 
+use super::Line;
 use super::call_arguments::print_call_arguments;
 use super::call_node::CallLikeNode;
-use super::Line;
 
 pub(super) struct MethodChain<'a> {
     pub base: &'a Expression,

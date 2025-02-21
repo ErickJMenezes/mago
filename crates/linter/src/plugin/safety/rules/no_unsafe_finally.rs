@@ -1,8 +1,8 @@
 use indoc::indoc;
 
 use mago_ast::*;
-use mago_ast_utils::control_flow::find_control_flows_in_block;
 use mago_ast_utils::control_flow::ControlFlow;
+use mago_ast_utils::control_flow::find_control_flows_in_block;
 use mago_reporting::*;
 use mago_span::HasSpan;
 

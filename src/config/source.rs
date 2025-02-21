@@ -1,14 +1,14 @@
 use std::path::PathBuf;
 
-use config::builder::BuilderState;
 use config::ConfigBuilder;
 use config::Value;
 use config::ValueKind;
+use config::builder::BuilderState;
 use serde::Deserialize;
 use serde::Serialize;
 
-use crate::config::ConfigurationEntry;
 use crate::config::CURRENT_DIR;
+use crate::config::ConfigurationEntry;
 use crate::error::Error;
 
 /// Configuration options for source discovery.

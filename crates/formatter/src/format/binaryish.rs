@@ -2,6 +2,7 @@ use mago_ast::*;
 use mago_span::HasSpan;
 use node::NodeKind;
 
+use crate::Formatter;
 use crate::binaryish::should_flatten;
 use crate::comment::CommentFlags;
 use crate::document::Document;
@@ -11,7 +12,6 @@ use crate::format::Format;
 use crate::utils::is_at_call_like_expression;
 use crate::utils::is_at_callee;
 use crate::utils::is_non_empty_array_like_expression;
-use crate::Formatter;
 
 pub(super) fn print_binaryish_expression<'a>(
     f: &mut Formatter<'a>,

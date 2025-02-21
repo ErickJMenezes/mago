@@ -5,35 +5,35 @@ use clap::Parser;
 use colored::Colorize;
 
 use mago_interner::ThreadedInterner;
+use mago_linter::Linter;
 use mago_linter::settings::RuleSettings;
 use mago_linter::settings::Settings;
-use mago_linter::Linter;
 use mago_php_version::PHPVersion;
-use mago_project::module::Module;
-use mago_project::module::ModuleBuildOptions;
 use mago_project::Project;
 use mago_project::ProjectBuilder;
+use mago_project::module::Module;
+use mago_project::module::ModuleBuildOptions;
 use mago_reflection::CodebaseReflection;
-use mago_reporting::reporter::Reporter;
-use mago_reporting::reporter::ReportingFormat;
-use mago_reporting::reporter::ReportingTarget;
 use mago_reporting::Issue;
 use mago_reporting::IssueCollection;
 use mago_reporting::Level;
-use mago_source::error::SourceError;
+use mago_reporting::reporter::Reporter;
+use mago_reporting::reporter::ReportingFormat;
+use mago_reporting::reporter::ReportingTarget;
 use mago_source::SourceCategory;
 use mago_source::SourceManager;
+use mago_source::error::SourceError;
 
-use crate::config::linter::LinterLevel;
 use crate::config::Configuration;
+use crate::config::linter::LinterLevel;
 use crate::enum_variants;
 use crate::error::Error;
 use crate::reflection::reflect_non_user_sources;
 use crate::source;
 use crate::utils::indent_multiline;
+use crate::utils::progress::ProgressBarTheme;
 use crate::utils::progress::create_progress_bar;
 use crate::utils::progress::remove_progress_bar;
-use crate::utils::progress::ProgressBarTheme;
 
 #[derive(Parser, Debug)]
 #[command(

@@ -3,10 +3,10 @@ use termcolor::WriteColor;
 use mago_interner::ThreadedInterner;
 use mago_source::SourceManager;
 
-use crate::error::ReportingError;
-use crate::internal::Expandable;
 use crate::IssueCollection;
 use crate::Level;
+use crate::error::ReportingError;
+use crate::internal::Expandable;
 
 pub fn json_format(
     writer: &mut dyn WriteColor,

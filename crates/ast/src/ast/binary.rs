@@ -8,8 +8,8 @@ use mago_span::Span;
 use mago_token::GetPrecedence;
 use mago_token::Precedence;
 
-use crate::ast::expression::Expression;
 use crate::Keyword;
+use crate::ast::expression::Expression;
 
 /// Represents a PHP binary operator.
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash, Serialize, Deserialize, PartialOrd, Ord, Display)]

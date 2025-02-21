@@ -21,6 +21,7 @@ pub mod definition;
 pub mod directive;
 pub mod plugin;
 pub mod rule;
+pub mod scope;
 pub mod settings;
 
 mod ast;

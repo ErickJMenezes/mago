@@ -1,8 +1,8 @@
 use mago_ast::Identifier;
 use mago_interner::ThreadedInterner;
 use mago_names::Names;
-use mago_reflection::r#type::kind::*;
 use mago_reflection::CodebaseReflection;
+use mago_reflection::r#type::kind::*;
 use mago_trinary::Trinary;
 use ordered_float::OrderedFloat;
 

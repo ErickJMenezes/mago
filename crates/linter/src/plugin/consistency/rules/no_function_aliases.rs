@@ -52,11 +52,7 @@ impl Rule for NoFunctionAliasesRule {
         let function_name = context.resolve_function_name(identifier);
 
         let original_name = ALIAS_TO_FUNCTION.iter().find_map(|&(alias, original)| {
-            if alias.eq_ignore_ascii_case(function_name) {
-                Some(original)
-            } else {
-                None
-            }
+            if alias.eq_ignore_ascii_case(function_name) { Some(original) } else { None }
         });
 
         if let Some(original_name) = original_name {

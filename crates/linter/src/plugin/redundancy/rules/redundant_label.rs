@@ -37,11 +37,7 @@ impl Rule for RedundantLabelRule {
         let labels =
             node.filter_map(
                 |node| {
-                    if let Node::Label(label) = node {
-                        Some((label.name.value, label.span()))
-                    } else {
-                        None
-                    }
+                    if let Node::Label(label) = node { Some((label.name.value, label.span())) } else { None }
                 },
             );
 

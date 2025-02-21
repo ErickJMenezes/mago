@@ -1,11 +1,11 @@
 use mago_ast::*;
 use mago_span::*;
 
+use crate::Formatter;
 use crate::document::Document;
 use crate::document::Group;
-use crate::format::call_arguments::print_call_arguments;
 use crate::format::Format;
-use crate::Formatter;
+use crate::format::call_arguments::print_call_arguments;
 
 pub(super) enum CallLikeNode<'a> {
     Call(&'a Call),

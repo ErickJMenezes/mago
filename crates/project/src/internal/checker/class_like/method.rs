@@ -4,9 +4,9 @@ use mago_ast::*;
 use mago_reporting::*;
 use mago_span::*;
 
+use crate::internal::checker::MAGIC_METHOD_SEMANTICS;
 use crate::internal::checker::function_like::check_for_promoted_properties_outside_constructor;
 use crate::internal::checker::returns_generator;
-use crate::internal::checker::MAGIC_METHOD_SEMANTICS;
 use crate::internal::context::Context;
 
 #[inline]
@@ -221,12 +221,9 @@ pub fn check_method(
                 if found_variadic || found_count.ne(count) {
                     let message = if found_variadic {
                         format!(
-                                "Magic method `{}::{}` must have exactly {} parameters, found more than {} due to variadic parameter.",
-                                class_like_name,
-                                method_name,
-                                count,
-                                found_count
-                            )
+                            "Magic method `{}::{}` must have exactly {} parameters, found more than {} due to variadic parameter.",
+                            class_like_name, method_name, count, found_count
+                        )
                     } else {
                         format!(
                             "Magic method `{}::{}` must have exactly {} parameters, found {}.",

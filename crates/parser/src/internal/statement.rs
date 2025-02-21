@@ -23,22 +23,22 @@ use crate::internal::goto::parse_goto;
 use crate::internal::goto::parse_label;
 use crate::internal::halt_compiler::parse_halt_compiler;
 use crate::internal::inline::parse_inline;
-use crate::internal::namespace::parse_namespace;
 use crate::internal::r#loop::do_while::parse_do_while;
+use crate::internal::r#loop::r#for::parse_for;
 use crate::internal::r#loop::foreach::parse_foreach;
 use crate::internal::r#loop::parse_break;
 use crate::internal::r#loop::parse_continue;
-use crate::internal::r#loop::r#for::parse_for;
 use crate::internal::r#loop::r#while::parse_while;
+use crate::internal::namespace::parse_namespace;
 use crate::internal::r#return::parse_return;
 use crate::internal::r#static::parse_static;
-use crate::internal::r#try::parse_try;
-use crate::internal::r#use::parse_use;
 use crate::internal::tag::parse_closing_tag;
 use crate::internal::tag::parse_opening_tag;
 use crate::internal::terminator::parse_terminator;
 use crate::internal::token_stream::TokenStream;
+use crate::internal::r#try::parse_try;
 use crate::internal::unset::parse_unset;
+use crate::internal::r#use::parse_use;
 use crate::internal::utils;
 
 pub fn parse_statement(stream: &mut TokenStream<'_, '_>) -> Result<Statement, ParseError> {

@@ -1,7 +1,7 @@
 use mago_interner::ThreadedInterner;
+use mago_reflection::Reflection;
 use mago_reflection::class_like::ClassLikeReflection;
 use mago_reflection::identifier::Name;
-use mago_reflection::Reflection;
 use mago_reporting::Annotation;
 use mago_reporting::Issue;
 use mago_span::HasSpan;

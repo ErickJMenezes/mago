@@ -1,7 +1,7 @@
-use config::builder::BuilderState;
 use config::ConfigBuilder;
 use config::Value;
 use config::ValueKind;
+use config::builder::BuilderState;
 use serde::Deserialize;
 use serde::Serialize;
 

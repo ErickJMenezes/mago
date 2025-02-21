@@ -1,6 +1,5 @@
 use std::path::PathBuf;
 
-use config::builder::BuilderState;
 use config::Config;
 use config::ConfigBuilder;
 use config::Environment;
@@ -8,6 +7,7 @@ use config::File;
 use config::FileFormat;
 use config::Value;
 use config::ValueKind;
+use config::builder::BuilderState;
 use serde::Deserialize;
 
 use mago_php_version::PHPVersion;

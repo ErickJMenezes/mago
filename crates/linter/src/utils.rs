@@ -40,9 +40,5 @@ fn remove_star_prefix(content: &str) -> Vec<&str> {
 
 #[inline]
 fn remove_stared_line_prefix(line: &str) -> &str {
-    if let Some(stripped) = line.trim_start().strip_prefix('*') {
-        stripped.trim_start()
-    } else {
-        line
-    }
+    if let Some(stripped) = line.trim_start().strip_prefix('*') { stripped.trim_start() } else { line }
 }

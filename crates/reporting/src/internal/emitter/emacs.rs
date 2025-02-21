@@ -4,9 +4,9 @@ use mago_interner::ThreadedInterner;
 use mago_source::HasSource;
 use mago_source::SourceManager;
 
-use crate::error::ReportingError;
 use crate::IssueCollection;
 use crate::Level;
+use crate::error::ReportingError;
 
 pub fn emacs_format(
     writer: &mut dyn WriteColor,

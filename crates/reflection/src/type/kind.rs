@@ -816,11 +816,7 @@ impl TypeKind {
                 ArrayTypeKind::List { non_empty, value, .. } => {
                     let value = value.get_key(interner);
 
-                    if *non_empty {
-                        format!("non-empty-list<{}>", value)
-                    } else {
-                        format!("list<{}>", value)
-                    }
+                    if *non_empty { format!("non-empty-list<{}>", value) } else { format!("list<{}>", value) }
                 }
                 ArrayTypeKind::CallableArray => "callable-array".to_string(),
                 ArrayTypeKind::Shape(array_shape) => {

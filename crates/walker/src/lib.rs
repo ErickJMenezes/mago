@@ -1,7 +1,7 @@
 #![allow(unused_variables)]
 
-use mago_ast::ast::*;
 use mago_ast::Program;
+use mago_ast::ast::*;
 
 /// Macro for generating a walker trait and associated functions for traversing an AST.
 ///

@@ -1,7 +1,7 @@
+use clap::Parser;
+use clap::builder::Styles;
 use clap::builder::styling::AnsiColor;
 use clap::builder::styling::Effects;
-use clap::builder::Styles;
-use clap::Parser;
 
 use crate::commands::ast::AstCommand;
 use crate::commands::find::FindCommand;

@@ -2,8 +2,8 @@ use mago_ast::ast::DocumentKind as AstDocumentKind;
 use mago_ast::ast::*;
 use mago_ast::sequence::Sequence;
 use mago_token::DocumentKind;
-use mago_token::TokenKind;
 use mago_token::T;
+use mago_token::TokenKind;
 
 use crate::error::ParseError;
 use crate::internal::expression::parse_expression;
@@ -27,7 +27,7 @@ pub fn parse_string(stream: &mut TokenStream<'_, '_>) -> Result<CompositeString,
                     TokenKind::DocumentStart(DocumentKind::Heredoc),
                     TokenKind::DocumentStart(DocumentKind::Nowdoc),
                 ],
-            ))
+            ));
         }
     })
 }
@@ -66,7 +66,7 @@ pub fn parse_document_string(stream: &mut TokenStream<'_, '_>) -> Result<Documen
                 stream,
                 Some(current),
                 &[TokenKind::DocumentStart(DocumentKind::Heredoc), TokenKind::DocumentStart(DocumentKind::Nowdoc)],
-            ))
+            ));
         }
     };
 
@@ -123,9 +123,10 @@ pub fn parse_optional_string_part(
             Some(StringPart::Literal(LiteralStringPart { span: token.span, value: token.value }))
         }
         kind if kind == closing_kind => None,
-        _ => Some(StringPart::Expression(Box::new(parse_expression(stream)?))),
+        _ => Some(StringPart::Expression(Box::new(parse_string_part_expression(stream)?))),
     })
 }
+
 pub fn parse_braced_expression_string_part(
     stream: &mut TokenStream<'_, '_>,
 ) -> Result<BracedExpressionStringPart, ParseError> {
@@ -134,4 +135,23 @@ pub fn parse_braced_expression_string_part(
     let right_brace = utils::expect_span(stream, T!["}"])?;
 
     Ok(BracedExpressionStringPart { left_brace, expression, right_brace })
+}
+
+fn parse_string_part_expression(stream: &mut TokenStream<'_, '_>) -> Result<Expression, ParseError> {
+    let expression = parse_expression(stream)?;
+
+    let Expression::ArrayAccess(ArrayAccess { array, left_bracket, index, right_bracket }) = expression else {
+        return Ok(expression);
+    };
+
+    let Expression::ConstantAccess(ConstantAccess { name }) = *index else {
+        return Ok(Expression::ArrayAccess(ArrayAccess { array, left_bracket, index, right_bracket }));
+    };
+
+    Ok(Expression::ArrayAccess(ArrayAccess {
+        array,
+        left_bracket,
+        index: Box::new(Expression::Identifier(name)),
+        right_bracket,
+    }))
 }

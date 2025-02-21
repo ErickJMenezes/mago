@@ -13,16 +13,16 @@ use codespan_reporting::term::DisplayStyle;
 use termcolor::WriteColor;
 
 use mago_interner::ThreadedInterner;
-use mago_source::error::SourceError;
 use mago_source::SourceIdentifier;
 use mago_source::SourceManager;
+use mago_source::error::SourceError;
 
-use crate::error::ReportingError;
 use crate::Annotation;
 use crate::AnnotationKind;
 use crate::Issue;
 use crate::IssueCollection;
 use crate::Level;
+use crate::error::ReportingError;
 
 pub fn rich_format(
     writer: &mut dyn WriteColor,

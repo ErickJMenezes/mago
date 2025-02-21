@@ -59,11 +59,7 @@ impl Trinary {
 
 impl From<bool> for Trinary {
     fn from(value: bool) -> Self {
-        if value {
-            Trinary::True
-        } else {
-            Trinary::False
-        }
+        if value { Trinary::True } else { Trinary::False }
     }
 }
 

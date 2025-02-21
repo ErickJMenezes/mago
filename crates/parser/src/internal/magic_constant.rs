@@ -32,7 +32,7 @@ pub fn parse_magic_constant(stream: &mut TokenStream<'_, '_>) -> Result<MagicCon
                     "__NAMESPACE__",
                     "__TRAIT__"
                 ],
-            ))
+            ));
         }
     })
 }

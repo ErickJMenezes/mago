@@ -3,10 +3,10 @@ use termcolor::WriteColor;
 use mago_interner::ThreadedInterner;
 use mago_source::SourceManager;
 
-use crate::error::ReportingError;
-use crate::reporter::ReportingFormat;
 use crate::IssueCollection;
 use crate::Level;
+use crate::error::ReportingError;
+use crate::reporter::ReportingFormat;
 
 mod utils;
 

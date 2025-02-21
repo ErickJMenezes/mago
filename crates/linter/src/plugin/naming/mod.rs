@@ -1,9 +1,9 @@
 use crate::definition::PluginDefinition;
 use crate::plugin::naming::rules::class::ClassRule;
 use crate::plugin::naming::rules::constant::ConstantRule;
+use crate::plugin::naming::rules::r#enum::EnumRule;
 use crate::plugin::naming::rules::function::FunctionRule;
 use crate::plugin::naming::rules::interface::InterfaceRule;
-use crate::plugin::naming::rules::r#enum::EnumRule;
 use crate::plugin::naming::rules::r#trait::TraitRule;
 
 use crate::plugin::Plugin;

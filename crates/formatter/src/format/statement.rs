@@ -1,10 +1,10 @@
 use mago_ast::*;
 use mago_span::HasSpan;
 
+use crate::Formatter;
 use crate::document::Document;
 use crate::document::Line;
 use crate::format::Format;
-use crate::Formatter;
 
 pub fn print_statement_sequence<'a>(f: &mut Formatter<'a>, stmts: &'a Sequence<Statement>) -> Vec<Document<'a>> {
     let mut parts = vec![];

@@ -102,40 +102,72 @@ impl std::fmt::Display for ParseError {
 impl ParseError {
     pub fn note(&self) -> &'static str {
         match self {
-            ParseError::InvalidTrivia(_) => "The comment is not recognized as a docblock. It should start with '/**' and end with '*/'.",
+            ParseError::InvalidTrivia(_) => {
+                "The comment is not recognized as a docblock. It should start with '/**' and end with '*/'."
+            }
             ParseError::UnclosedInlineTag(_) => "The inline tag is missing a closing '}'.",
             ParseError::UnclosedInlineCode(_) => "Inline code is missing a closing backtick '`'.",
             ParseError::UnclosedCodeBlock(_) => "The code block is missing a closing delimiter '```'.",
             ParseError::InvalidTagName(_) => "The tag name contains invalid characters.",
-            ParseError::InvalidAnnotationName(_) => "The annotation name is invalid. It must start with an uppercase letter, '_', or '\\', and contain only allowed characters.",
-            ParseError::UnclosedAnnotationArguments(_) => "The annotation arguments are missing a closing parenthesis ')'.",
+            ParseError::InvalidAnnotationName(_) => {
+                "The annotation name is invalid. It must start with an uppercase letter, '_', or '\\', and contain only allowed characters."
+            }
+            ParseError::UnclosedAnnotationArguments(_) => {
+                "The annotation arguments are missing a closing parenthesis ')'."
+            }
             ParseError::MalformedCodeBlock(_) => "The code block is malformed or incorrectly formatted.",
-            ParseError::InvalidComment(_) => "The comment is not a valid docblock. It should start with '/**' and end with '*/'.",
+            ParseError::InvalidComment(_) => {
+                "The comment is not a valid docblock. It should start with '/**' and end with '*/'."
+            }
             ParseError::InconsistentIndentation(_, _, _) => "The indentation in the docblock comment is inconsistent.",
             ParseError::MissingAsterisk(_) => "An asterisk '*' is missing at the beginning of a line in the docblock.",
-            ParseError::MissingWhitespaceAfterAsterisk(_) => "Missing whitespace after the asterisk '*' in the docblock.",
-            ParseError::MissingWhitespaceAfterOpeningAsterisk(_) => "Missing whitespace after the opening '/**' in a single-line docblock.",
-            ParseError::MissingWhitespaceBeforeClosingAsterisk(_) => "Missing whitespace before the closing '*/' in a single-line docblock.",
+            ParseError::MissingWhitespaceAfterAsterisk(_) => {
+                "Missing whitespace after the asterisk '*' in the docblock."
+            }
+            ParseError::MissingWhitespaceAfterOpeningAsterisk(_) => {
+                "Missing whitespace after the opening '/**' in a single-line docblock."
+            }
+            ParseError::MissingWhitespaceBeforeClosingAsterisk(_) => {
+                "Missing whitespace before the closing '*/' in a single-line docblock."
+            }
             ParseError::ExpectedLine(_) => "A line or tag was expected in the docblock but none was found.",
         }
     }
 
     pub fn help(&self) -> &'static str {
         match self {
-            ParseError::InvalidTrivia(_) => "Replace the comment with a proper docblock starting with '/**' and ending with '*/'.",
+            ParseError::InvalidTrivia(_) => {
+                "Replace the comment with a proper docblock starting with '/**' and ending with '*/'."
+            }
             ParseError::UnclosedInlineTag(_) => "Add a closing '}' to complete the inline tag.",
             ParseError::UnclosedInlineCode(_) => "Add a closing '`' to terminate the inline code.",
             ParseError::UnclosedCodeBlock(_) => "Add a closing '```' to terminate the code block.",
             ParseError::InvalidTagName(_) => "Use only letters, numbers, and hyphens in the tag name.",
-            ParseError::InvalidAnnotationName(_) => "Correct the annotation name to start with an uppercase letter, '_', or '\\', and use only letters, numbers, '_', '\\', or unicode characters.",
+            ParseError::InvalidAnnotationName(_) => {
+                "Correct the annotation name to start with an uppercase letter, '_', or '\\', and use only letters, numbers, '_', '\\', or unicode characters."
+            }
             ParseError::UnclosedAnnotationArguments(_) => "Add a closing ')' to complete the annotation arguments.",
-            ParseError::MalformedCodeBlock(_) => "Ensure the code block starts with '```', optionally followed by a language identifier, and ends with a closing '```'.",
-            ParseError::InvalidComment(_) => "Replace the comment with a valid docblock starting with '/**' and ending with '*/'.",
-            ParseError::InconsistentIndentation(_, _, _) => "Adjust the indentation to be consistent across all lines in the docblock.",
-            ParseError::MissingAsterisk(_) => "Add an '*' at the beginning of each line in the docblock after the opening '/**'.",
-            ParseError::MissingWhitespaceAfterAsterisk(_) => "Insert a space after the '*' at the beginning of the line.",
-            ParseError::MissingWhitespaceAfterOpeningAsterisk(_) => "Insert a space between '/**' and the text in the single-line docblock.",
-            ParseError::MissingWhitespaceBeforeClosingAsterisk(_) => "Insert a space between the text and '*/' in the single-line docblock.",
+            ParseError::MalformedCodeBlock(_) => {
+                "Ensure the code block starts with '```', optionally followed by a language identifier, and ends with a closing '```'."
+            }
+            ParseError::InvalidComment(_) => {
+                "Replace the comment with a valid docblock starting with '/**' and ending with '*/'."
+            }
+            ParseError::InconsistentIndentation(_, _, _) => {
+                "Adjust the indentation to be consistent across all lines in the docblock."
+            }
+            ParseError::MissingAsterisk(_) => {
+                "Add an '*' at the beginning of each line in the docblock after the opening '/**'."
+            }
+            ParseError::MissingWhitespaceAfterAsterisk(_) => {
+                "Insert a space after the '*' at the beginning of the line."
+            }
+            ParseError::MissingWhitespaceAfterOpeningAsterisk(_) => {
+                "Insert a space between '/**' and the text in the single-line docblock."
+            }
+            ParseError::MissingWhitespaceBeforeClosingAsterisk(_) => {
+                "Insert a space between the text and '*/' in the single-line docblock."
+            }
             ParseError::ExpectedLine(_) => "Ensure that the docblock contains at least one line of text or a tag.",
         }
     }

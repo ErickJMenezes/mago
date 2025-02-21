@@ -2,11 +2,11 @@ use std::borrow::Cow;
 
 use mago_span::Span;
 
+use crate::Formatter;
 use crate::document::Document;
 use crate::document::Group;
 use crate::document::Line;
 use crate::document::Separator;
-use crate::Formatter;
 
 use crate::comment::Comment;
 use crate::comment::CommentFlags;

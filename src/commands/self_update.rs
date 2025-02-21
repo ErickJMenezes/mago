@@ -6,6 +6,8 @@ use std::io::Write;
 use std::process::ExitCode;
 
 use clap::Parser;
+use self_update::Download;
+use self_update::Extract;
 use self_update::backends::github::Update;
 use self_update::errors::Error as SelfUpdateError;
 use self_update::self_replace;
@@ -15,8 +17,6 @@ use self_update::update::ReleaseUpdate;
 use self_update::update::UpdateStatus;
 use self_update::version::bump_is_compatible;
 use self_update::version::bump_is_greater;
-use self_update::Download;
-use self_update::Extract;
 use tempfile::TempDir;
 use tracing::debug;
 use tracing::info;

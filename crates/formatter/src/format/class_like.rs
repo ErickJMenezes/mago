@@ -1,9 +1,9 @@
 use mago_ast::*;
 use mago_span::Span;
 
+use crate::Formatter;
 use crate::document::Document;
 use crate::settings::BraceStyle;
-use crate::Formatter;
 
 use super::block::print_block_of_nodes;
 

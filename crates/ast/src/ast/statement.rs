@@ -22,21 +22,21 @@ use crate::ast::goto::Goto;
 use crate::ast::goto::Label;
 use crate::ast::halt_compiler::HaltCompiler;
 use crate::ast::inline::Inline;
-use crate::ast::namespace::Namespace;
-use crate::ast::r#loop::do_while::DoWhile;
-use crate::ast::r#loop::foreach::Foreach;
-use crate::ast::r#loop::r#for::For;
-use crate::ast::r#loop::r#while::While;
 use crate::ast::r#loop::Break;
 use crate::ast::r#loop::Continue;
+use crate::ast::r#loop::do_while::DoWhile;
+use crate::ast::r#loop::r#for::For;
+use crate::ast::r#loop::foreach::Foreach;
+use crate::ast::r#loop::r#while::While;
+use crate::ast::namespace::Namespace;
 use crate::ast::r#return::Return;
 use crate::ast::r#static::Static;
-use crate::ast::r#try::Try;
-use crate::ast::r#use::Use;
 use crate::ast::tag::ClosingTag;
 use crate::ast::tag::OpeningTag;
 use crate::ast::terminator::Terminator;
+use crate::ast::r#try::Try;
 use crate::ast::unset::Unset;
+use crate::ast::r#use::Use;
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize, PartialOrd, Ord)]
 #[repr(C)]
