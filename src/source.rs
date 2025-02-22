@@ -5,6 +5,8 @@ use ahash::HashSet;
 use async_walkdir::Filtering;
 use async_walkdir::WalkDir;
 use futures::StreamExt;
+use std::process::Command;
+use std::process::Stdio;
 
 use mago_interner::ThreadedInterner;
 use mago_source::SourceCategory;
@@ -13,6 +15,8 @@ use mago_source::SourceManager;
 use crate::config::source::SourceConfiguration;
 use crate::consts::PHP_STUBS;
 use crate::error::Error;
+
+const FAILED_GIT_COMMAND: &str = "Failed to execute git command. It's probably not installed or is not in your PATH.";
 
 /// Load the source manager from the given files or directories,
 /// ignoring the `paths`, `includes`, and `excludes` configuration.
@@ -52,6 +56,97 @@ pub async fn from_paths(
     }
 
     Ok(manager)
+}
+
+/// Load the source manager from the modified files in a Git repository.
+///
+/// This function checks if the current directory is a Git repository,
+/// collects the list of modified files using `git diff --name-only`,
+/// and processes those files to build a source manager.
+///
+/// # Arguments
+///
+/// * `interner` - The interner to use for string interning.
+/// * `configuration` - The configuration to use for loading the sources.
+/// * `include_externals` - Whether to include external sources in the source manager.
+/// * `include_stubs` - Whether to include stubs in the source manager.
+///
+/// # Returns
+///
+/// A `Result` containing the new `SourceManager` or an `Error` if an error
+/// occurred during the build process.
+///
+/// # Errors
+///
+/// This function will return an error if:
+/// - The current working directory is not part of a Git repository.
+/// - The `git` command is not available or fails to execute.
+/// - Any file operation or source processing fails during execution.
+pub async fn from_modified_files(
+    interner: &ThreadedInterner,
+    configuration: &SourceConfiguration,
+    include_externals: bool,
+    include_stubs: bool,
+) -> Result<SourceManager, Error> {
+    let paths = git_modified_files();
+
+    if paths.is_empty() {
+        // when the `paths` array is empty, there's nothing to fix, lint and format.
+        // Just return an empty source manager.
+        return Ok(SourceManager::new(interner.clone()));
+    }
+
+    let new_configuration = SourceConfiguration {
+        root: configuration.root.clone(),
+        includes: configuration.includes.clone(),
+        paths,
+        excludes: configuration.excludes.clone(),
+        extensions: configuration.extensions.clone(),
+    };
+
+    load(interner, &new_configuration, include_externals, include_stubs).await
+}
+
+#[inline]
+fn git_modified_files() -> Vec<PathBuf> {
+    let mut paths: Vec<PathBuf> = Vec::new();
+
+    let git_output = Command::new("git")
+        .args(["--no-pager", "diff", "--name-only"])
+        .stderr(Stdio::null())
+        .output()
+        .expect(FAILED_GIT_COMMAND);
+
+    let output = String::from_utf8_lossy(&git_output.stdout);
+
+    for line in output.lines() {
+        let path = Path::new(line);
+        paths.push(path.to_path_buf());
+    }
+
+    paths
+}
+
+/// Check if `git` is available as a command and the current directory is inside a git repository.
+///
+/// This function verifies whether the current working directory is part of a
+/// Git repository by running the `git rev-parse --is-inside-work-tree` command.
+///
+/// # Returns
+///
+/// A boolean value:
+/// - `true` if the directory is inside a Git repository and `git` is available as a command.
+/// - `false` if not.
+pub fn is_git_available() -> bool {
+    let mut command = Command::new("git");
+    command.args(["rev-parse", "--is-inside-work-tree"]).stderr(Stdio::null());
+
+    match command.output() {
+        Ok(output) => {
+            output.status.success() && String::from_utf8_lossy(&output.stdout).trim().eq_ignore_ascii_case("true")
+        }
+        Err(_) => false,
+    }
 }
 
 /// Load the source manager by scanning and processing the sources

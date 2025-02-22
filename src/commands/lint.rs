@@ -53,7 +53,7 @@ a consistent, clean codebase.
 )]
 pub struct LintCommand {
     /// Lint specific files or directories, overriding the source configuration.
-    #[arg(help = "Lint specific files or directories, overriding the source configuration")]
+    #[arg(help = "Lint specific files or directories, overriding the source configuration", conflicts_with = "only_changed_files")]
     pub path: Vec<PathBuf>,
 
     /// Filter the output to only show issues that can be automatically fixed with `mago fix`.
@@ -158,6 +158,15 @@ pub struct LintCommand {
         value_parser = enum_variants!(ReportingFormat)
     )]
     pub reporting_format: ReportingFormat,
+
+    /// Lint all modified files in the current git branch.
+    #[arg(
+        long,
+        short = 'C',
+        help = "Only lint the files that have been modified in the current branch",
+        conflicts_with = "path"
+    )]
+    pub only_changed_files: bool,
 }
 
 pub async fn execute(command: LintCommand, mut configuration: Configuration) -> Result<ExitCode, Error> {
@@ -179,8 +188,18 @@ pub async fn execute(command: LintCommand, mut configuration: Configuration) -> 
         return list_rules(&interner, &configuration);
     }
 
+    if command.only_changed_files && !source::is_git_available() {
+        tracing::error!(
+            "The `--only-changed-files` flag requires the current directory to be part of a git repository and `git` to be available in your system."
+        );
+        return Ok(ExitCode::FAILURE);
+    }
+
     // Load sources
-    let source_manager = if !command.path.is_empty() {
+    let source_manager = if command.only_changed_files {
+        source::from_modified_files(&interner, &configuration.source, !command.semantics_only, !command.semantics_only)
+            .await?
+    } else if !command.path.is_empty() {
         source::from_paths(&interner, &configuration.source, command.path, !command.semantics_only).await?
     } else {
         source::load(&interner, &configuration.source, !command.semantics_only, !command.semantics_only).await?

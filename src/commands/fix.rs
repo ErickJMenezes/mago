@@ -30,7 +30,10 @@ This command streamlines the process of addressing lint issues, improving code q
 )]
 pub struct FixCommand {
     /// Lint specific files or directories, overriding the source configuration.
-    #[arg(help = "Lint specific files or directories, overriding the source configuration")]
+    #[arg(
+        help = "Lint specific files or directories, overriding the source configuration",
+        conflicts_with = "only_changed_files"
+    )]
     pub path: Vec<PathBuf>,
 
     #[arg(short, long, help = "Do not load default plugins, only load the ones specified in the configuration.")]
@@ -50,6 +53,15 @@ pub struct FixCommand {
     /// Run the command without writing any changes to disk.
     #[arg(long, short = 'd', help = "Preview the fixes without applying them, showing what changes would be made")]
     pub dry_run: bool,
+
+    /// Apply fixes to all modified files in the current git branch.
+    #[arg(
+        long,
+        short = 'C',
+        help = "Only apply fixes to the files that have been modified in the current branch",
+        conflicts_with = "path"
+    )]
+    pub only_changed_files: bool,
 }
 
 impl FixCommand {
@@ -79,8 +91,17 @@ pub async fn execute(command: FixCommand, mut configuration: Configuration) -> R
         configuration.linter.plugins = command.plugins;
     }
 
+    if command.only_changed_files && !source::is_git_available() {
+        tracing::error!(
+            "The `--only-changed-files` flag requires the current directory to be part of a git repository and `git` to be available in your system."
+        );
+        return Ok(ExitCode::FAILURE);
+    }
+
     // Load sources
-    let source_manager = if !command.path.is_empty() {
+    let source_manager = if command.only_changed_files {
+        source::from_modified_files(&interner, &configuration.source, true, true).await?
+    } else if !command.path.is_empty() {
         source::from_paths(&interner, &configuration.source, command.path, true).await?
     } else {
         source::load(&interner, &configuration.source, true, true).await?

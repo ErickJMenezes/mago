@@ -34,12 +34,24 @@ This command helps maintain a consistent codebase style, improving readability a
 )]
 pub struct FormatCommand {
     /// Format specific files or directories, overriding the source configuration.
-    #[arg(help = "Format specific files or directories, overriding the source configuration")]
+    #[arg(
+        help = "Format specific files or directories, overriding the source configuration",
+        conflicts_with = "only_changed_files"
+    )]
     pub path: Vec<PathBuf>,
 
     /// Perform a dry run to check if files are already formatted.
     #[arg(long, short = 'd', help = "Check if the source files are already formatted without making changes")]
     pub dry_run: bool,
+
+    /// Format all modified files in the current git branch.
+    #[arg(
+        long,
+        short = 'C',
+        help = "Only format the files that have been modified in the current branch",
+        conflicts_with = "path"
+    )]
+    pub only_changed_files: bool,
 }
 
 /// Executes the format command with the provided configuration and options.
@@ -58,8 +70,17 @@ pub async fn execute(command: FormatCommand, mut configuration: Configuration) -
 
     configuration.source.excludes.extend(std::mem::take(&mut configuration.format.excludes));
 
+    if command.only_changed_files && !source::is_git_available() {
+        tracing::error!(
+            "The `--only-changed-files` flag requires the current directory to be part of a git repository and `git` to be available in your system."
+        );
+        return Ok(ExitCode::FAILURE);
+    }
+
     // Load sources
-    let source_manager = if !command.path.is_empty() {
+    let source_manager = if command.only_changed_files {
+        source::from_modified_files(&interner, &configuration.source, false, false).await?
+    } else if !command.path.is_empty() {
         source::from_paths(&interner, &configuration.source, command.path, false).await?
     } else {
         source::load(&interner, &configuration.source, false, false).await?
